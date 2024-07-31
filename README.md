@@ -190,3 +190,19 @@ Apache License 2.0, see [LICENSE](https://github.com/prometheus/prometheus/blob/
 
 [hub]: https://hub.docker.com/r/prom/prometheus/
 [quay]: https://quay.io/repository/prometheus/prometheus
+
+# 1、修改这2个文件的源码关闭prometheus的pprof功能：
+	prometheus/cmd/prometheus/main.go
+	prometheus/web/web.go
+
+# 2、创建构建二进制文件：
+	make build 
+
+# 3、修改Dockerfile文件：
+	prometheus/Dockerfile
+
+# 4、通过Dockerfile文件构建镜像：
+	docker build -f Dockerfile -t my_pormetheus:v2.53.1 .              # 通过Dockerfile文件在当前目录下构建名为my_prometheus:v2.53.1的镜像
+	docker images                                                      # 查看镜像
+	docker tag my_pormetheus:v2.53.1 zorn0zhao/prometheus:v2.53.1      # 给my_pormetheus:v2.53.1镜像打标签 准备推送到zorn0zhao/prometheus仓库，版本号为v2.53.1
+	docker push zorn0zhao/prometheus:v2.53.1                           # 推送镜像到 docker hub仓库
